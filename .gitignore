@@ -1,0 +1,17 @@
+﻿/Library/
+/Temp/
+/*.csproj
+/*.sln
+/ProjectSettings/ProjectVersion.txt
+!*.meta
+*.mdb
+*.dll.mdb.meta
+/.vs/
+/build/
+*.apk
+/Logs/
+/obj/
+/ProjectSettings/*.asset
+.vsconfig
+/Packages/packages-lock.json
+/UserSettings/
