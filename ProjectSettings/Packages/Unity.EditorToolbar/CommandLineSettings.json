@@ -1,0 +1,19 @@
+{
+    "groups": [
+        {
+            "items": [
+                {
+                    "name": "cmd",
+                    "file": "cmd",
+                    "argument": "",
+                    "separator": false,
+                    "isDeffault": false
+                }
+            ],
+            "isDefault": true,
+            "icon": "",
+            "name": "Command",
+            "tooltip": ""
+        }
+    ]
+}

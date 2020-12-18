@@ -6,11 +6,11 @@
         },
         {
             "type": "UnityEditor.Toolbars.OpenFileOrFolderTool, UnityEditor.Toolbar, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "json": "{\"enabled\":false,\"position\":0,\"order\":0,\"space\":false}"
+            "json": "{\"enabled\":true,\"position\":0,\"order\":0,\"space\":false}"
         },
         {
             "type": "UnityEditor.Toolbars.OpenPreviousSceneTool, UnityEditor.Toolbar, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "json": "{\"enabled\":false,\"position\":0,\"order\":0,\"space\":false}"
+            "json": "{\"enabled\":true,\"position\":0,\"order\":0,\"space\":false}"
         },
         {
             "type": "UnityEditor.Toolbars.PlayTool, UnityEditor.Toolbar, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",

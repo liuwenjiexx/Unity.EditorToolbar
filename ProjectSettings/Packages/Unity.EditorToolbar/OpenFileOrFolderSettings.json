@@ -1,0 +1,42 @@
+{
+    "groups": [
+        {
+            "items": [
+                {
+                    "path": "",
+                    "guid": "e37430ebb8f377b41aa270c987573498",
+                    "name": "Example",
+                    "separator": false,
+                    "isFile": false,
+                    "includeFilePattern": ""
+                },
+                {
+                    "path": "ProjectSettings",
+                    "guid": "",
+                    "name": "ProjectSettings",
+                    "separator": false,
+                    "isFile": false,
+                    "includeFilePattern": ""
+                },
+                {
+                    "path": "",
+                    "guid": "",
+                    "name": "",
+                    "separator": true,
+                    "isFile": false,
+                    "includeFilePattern": ""
+                },
+                {
+                    "path": "Packages",
+                    "guid": "",
+                    "name": "Packages",
+                    "separator": false,
+                    "isFile": true,
+                    "includeFilePattern": "manifest.json"
+                }
+            ],
+            "isDefault": true,
+            "name": "Default"
+        }
+    ]
+}
