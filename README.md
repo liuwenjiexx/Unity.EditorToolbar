@@ -17,6 +17,7 @@
 ```
 "com.unity.serialization": "https://github.com/liuwenjiexx/unity.serialization.git",
 "com.unity.eui": "https://github.com/liuwenjiexx/unity.eui.git",
+"com.unity.binding": "https://github.com/liuwenjiexx/Unity.Bindings.git?path=/Assets/Plugins/Unity.Bindings",
 "com.unity.editor.toolbar": "https://github.com/liuwenjiexx/Unity.EditorToolbar.git?path=/Assets/Plugins/Unity.EditorToolbar",
 ```
 
