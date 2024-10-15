@@ -94,7 +94,7 @@ static EditorToolbar PlayScene()
 
 - 选择 `Scene/PlayScene`，显示 `Inspector` 面板
 
-  ![settings-playtool](doc~/images/tool-play-settings.png)
+  ![settings-playtool](doc~/images/tool-play-settings.PNG)
 
 - 设置启动场景 `Scene`
 
@@ -104,7 +104,7 @@ static EditorToolbar PlayScene()
 
 打开上一次打开的场景
 
-![tool-switch_previous_scene-menu](doc~/images/tool-switch_previous_scene-menu.png)
+![tool-switch_previous_scene-menu](doc~/images/tool-switch_previous_scene-menu.PNG)
 
 - Click
 
