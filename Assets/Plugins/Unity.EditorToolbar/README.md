@@ -8,7 +8,7 @@
 
 
 
-![preview-1](doc~\images\preview-1.png)
+![preview-1](doc~/images/preview-1.png)
 
 
 
@@ -22,7 +22,7 @@
 
 ### 按钮样式
 
-![icon-style](doc~/images/toolbar-style.PNG)
+![icon-style](doc~/images/toolbar-style.png)
 
 - 图标按钮
 
@@ -60,7 +60,7 @@ static EditorToolbar PlayScene()
 
 先切换到启动场景后再运行，默认`启动场景`为 `BuildSettings` 第一个
 
-![tool-play-menu](doc~\images\tool-play-menu.png)
+![tool-play-menu](doc~/images/tool-play-menu.png)
 
 - Click
 
@@ -94,7 +94,7 @@ static EditorToolbar PlayScene()
 
 - 选择 `Scene/PlayScene`，显示 `Inspector` 面板
 
-  ![settings-playtool](doc~\images\tool-play-settings.PNG)
+  ![settings-playtool](doc~/images/tool-play-settings.png)
 
 - 设置启动场景 `Scene`
 
@@ -104,7 +104,7 @@ static EditorToolbar PlayScene()
 
 打开上一次打开的场景
 
-![tool-switch_previous_scene-menu](doc~\images\tool-switch_previous_scene-menu.PNG)
+![tool-switch_previous_scene-menu](doc~/images/tool-switch_previous_scene-menu.png)
 
 - Click
 
