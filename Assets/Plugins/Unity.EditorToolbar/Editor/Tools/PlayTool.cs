@@ -1,141 +1,216 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
+using UnityEditor;
+using System.Linq;
 
-namespace UnityEditor.Toolbars
+namespace Unity.Toolbars.Editor
 {
-    class PlayTool : EditorToolbarMenuButton
-    {
-        private GUIContent icon;
-        private static string playSceneGuid;
 
-        public override GUIContent Icon
+    [Serializable]
+    public class PlayTool : EditorToolbarButton
+    {
+        [SerializeField, HideInInspector]
+        private string sceneGuid;
+
+        private PlayTool()
         {
-            get
-            {
-                if (icon == null)
-                    icon = new GUIContent(EditorGUIUtility.IconContent("PlayButton On").image, "Play\n\n- shift key open scene\n- control key select play scene");
-                return icon;
-            }
         }
 
 
-        public override bool IsAvailable => !Application.isPlaying;
+        public string SceneGuid
+        {
+            get => sceneGuid;
+            set
+            {
+                if (SetProperty(nameof(SceneGuid), ref sceneGuid, value))
+                {
+                    Refresh();
+                }
+            }
+        }
 
-
-        public static string PlaySceneGuid
+        public string AssetPath
         {
             get
             {
-                if (playSceneGuid == null)
+                string assetPath = null;
+                string guid = SceneGuid;
+                if (!string.IsNullOrEmpty(guid))
                 {
-                    playSceneGuid = PlayerPrefs.GetString("EditorTools.Scene.Play.Guid");
-                    if (playSceneGuid == null)
-                        playSceneGuid = string.Empty;
+                    assetPath = AssetDatabase.GUIDToAssetPath(guid);
                 }
-                return playSceneGuid;
+                return assetPath;
             }
             set
             {
-                if (PlaySceneGuid != value)
+                if (!string.IsNullOrEmpty(value))
                 {
-                    playSceneGuid = value;
-                    PlayerPrefs.SetString("EditorTools.Scene.Play.Guid", playSceneGuid);
-                    PlayerPrefs.Save();
+                    SceneGuid = AssetDatabase.AssetPathToGUID(value);
+                }
+                else
+                {
+                    SceneGuid = null;
                 }
             }
         }
 
-
-
-
-        private void OpenScene(object state)
+        public override string Tooltip
         {
-            object[] values = (object[])state;
-            string scenePath = (string)values[0];
-            bool playing = (bool)values[1];
-            bool setPlaySceneIndex = (bool)values[2];
-
-            if (setPlaySceneIndex)
+            get
             {
-                var scenes = EditorBuildSettings.scenes;
-                for (int i = 0; i < scenes.Length; i++)
+                if (base.tooltip == ConfigValueKeyword.Null)
                 {
-                    var scene = scenes[i];
-                    if (scene.path == scenePath)
+                    if (!string.IsNullOrEmpty(AssetPath))
                     {
-                        PlaySceneGuid = scene.guid.ToString();
-                        break;
+                        return $"Play '{Path.GetFileNameWithoutExtension(AssetPath)}'";
                     }
                 }
-                return;
+                return base.Tooltip;
             }
+            set => base.Tooltip = value;
+        }
 
-            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+        public override bool IsAvailable
+        {
+            get => base.IsAvailable && !string.IsNullOrEmpty(SceneGuid);
+            set => base.IsAvailable = value;
+        }
+
+        public bool IsSceneOpened
+        {
+            get
             {
-                AssetDatabase.Refresh();
+                if (AssetPath == EditorSceneManager.GetActiveScene().path)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+        public override Texture2D Icon
+        {
+            get => base.icon == ConfigValueKeyword.Null ? Icons.PlayButtonOn : base.Icon;
+            set => base.Icon = value;
+        }
 
-                if (scenePath != EditorSceneManager.GetActiveScene().path)
+        public void Play()
+        {
+            string scenePath = AssetPath;
+            if (!IsSceneOpened)
+            {
+                if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 {
                     EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
                 }
-                if (playing)
-                    EditorApplication.isPlaying = true;
-            }
-        }
-
-        public override void OnClick()
-        {
-            string assetPath = null;
-            if (!string.IsNullOrEmpty(PlaySceneGuid))
-                assetPath = AssetDatabase.GUIDToAssetPath(PlaySceneGuid);
-            if (string.IsNullOrEmpty(assetPath))
-            {
-                var scenes = EditorBuildSettings.scenes;
-
-                if (scenes.Length > 0)
+                else
                 {
-                    assetPath = scenes[0].path;
+                    return;
                 }
             }
-            OpenScene(new object[] { assetPath, !Event.current.shift, false });
+            EditorApplication.isPlaying = true;
         }
 
-        public override void OnMenu()
+        public void OpenScene()
         {
-            GenericMenu menu = new GenericMenu();
-            menu.AddItem(new GUIContent("Select"), false, () =>
+            if (!IsAvailable)
+                return;
+
+            string scenePath = AssetPath;
+            if (IsSceneOpened)
+                return;
+
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
-                var scenes = EditorBuildSettings.scenes;
-                if (scenes.Length > 0)
+                EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+            }
+        }
+
+        protected override void OnClick()
+        {
+            if (EditorApplication.isPlaying)
+            {
+                EditorApplication.isPlaying = false;
+                return;
+            }
+            string assetPath = null;
+            if (!string.IsNullOrEmpty(SceneGuid))
+                assetPath = AssetDatabase.GUIDToAssetPath(SceneGuid);
+
+            if (string.IsNullOrEmpty(assetPath))
+                return;
+
+            Play();
+        }
+
+        protected override void OnCreateContextMenu(DropdownMenu menu)
+        {
+            string path = EditorSceneManager.GetActiveScene().path;
+
+            if (!string.IsNullOrEmpty(path))
+            {/*
+                menu.AppendAction($"Set Start Play '{Path.GetFileNameWithoutExtension(path)}'", (menuItem) =>
                 {
-                    string assetPath = scenes[0].path;
-                    EditorGUIUtility.PingObject(AssetDatabase.LoadAssetAtPath<Object>(assetPath));
+                    string path = EditorSceneManager.GetActiveScene().path;
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        SetDefaultScene(path);
+                    }
+                });*/
+            }
+            menu.AppendAction("Select", (menuItem) =>
+            {
+                string path = AssetPath;
+                if (!string.IsNullOrEmpty(path))
+                {
+                    var obj = AssetDatabase.LoadMainAssetAtPath(path);
+                    if (obj)
+                    {
+                        EditorGUIUtility.PingObject(obj);
+                    }
                 }
             });
-            menu.AddSeparator("");
-            int i = 0;
-            foreach (var scene in EditorBuildSettings.scenes)
+
+            menu.AppendAction("Open", (menuItem) =>
             {
-                string name = Path.GetFileNameWithoutExtension(scene.path);
-                bool selected = false;
-                if (!string.IsNullOrEmpty(PlaySceneGuid))
-                {
-                    selected = scene.guid.ToString() == PlaySceneGuid;
-                }
-                else if (i == 0)
-                {
-                    selected = true;
-                }
+                OpenScene();
+            });
 
-                menu.AddItem(new GUIContent(name), selected, OpenScene, new object[] { scene.path, false, Event.current.control });
-                i++;
-            }
+            //   menu.AppendSeparator();
 
-            menu.ShowAsContext();
+            /*   int i = 0;
+               foreach (var scene in EditorBuildSettings.scenes
+                   .Where(o => !string.IsNullOrEmpty(o.path))
+                   .OrderBy(o => Path.GetFileNameWithoutExtension(o.path)))
+               {
+                   string name = Path.GetFileNameWithoutExtension(scene.path);
+                   bool selected = false;
+                   if (!string.IsNullOrEmpty(SceneGuid))
+                   {
+                       selected = scene.guid.ToString() == SceneGuid;
+                   }
+                   else if (i == 0)
+                   {
+                       selected = true;
+                   }
+
+                   menu.AppendAction(name, (o) =>
+                   {
+                       OpenScene((string)o.userData, false, o.eventInfo.modifiers == EventModifiers.Control);
+                   }, (o) => selected ? DropdownMenuAction.Status.Checked : DropdownMenuAction.Status.Normal, scene.path);
+                   i++;
+               }*/
         }
 
-
+        [EditorToolbar]
+        static EditorToolbar PlayScene()
+        {
+            PlayTool tool = new PlayTool();
+            tool.Group = GROUP_SCENE;
+            return tool;
+        }
     }
 }

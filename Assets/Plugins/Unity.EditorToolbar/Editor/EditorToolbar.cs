@@ -5,102 +5,290 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using System.Reflection.Extensions;
 using UnityEngine.UIElements;
+using UnityEditor.UIElements;
+using UnityEditor;
+using System.ComponentModel;
+using Unity.UI.Editor;
+using System.Runtime.CompilerServices;
+using System.Text;
+using Unity.Bindings;
 
-namespace UnityEditor.Toolbars
+namespace Unity.Toolbars.Editor
 {
 
-    [InitializeOnLoad]
-    public class EditorToolbar
+    [Serializable]
+    public partial class EditorToolbar : INotifyPropertyChanged
     {
 
-        static Type toolbarType = typeof(Editor).Assembly.GetType("UnityEditor.Toolbar");
-        static Type guiViewType = typeof(Editor).Assembly.GetType("UnityEditor.GUIView");
+        static Type toolbarType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.Toolbar");
+        static Type guiViewType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GUIView");
 
         static PropertyInfo viewVisualTreeProperty = guiViewType.GetProperty("visualTree", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-        //static FieldInfo imguiContainerOnGuiField = typeof(IMGUIContainer).GetField("m_OnGUIHandler", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-        static ScriptableObject currentToolbar;
 
-        static int toolCount = 4;
-        static GUIStyle commandStyle = null;
+        private string id;
 
-        public static event Action OnToolbarGUI;
-        public static event Action OnToolbarLeftGUI;
-        public static event Action OnToolbarRightGUI;
-        static IMGUIContainer guiContainer;
+        [SerializeField, HideInInspector]
+        protected ConfigValue<bool> enabled = ConfigValueKeyword.Null;
 
-        public const string PackageName = "Unity.EditorToolbar";
-        private static GUIStyle toolbarButtonStyle;
-        private static GUIStyle toolbarMenuButtonStyle;
+        [SerializeField, HideInInspector]
+        protected ConfigValue<string> name = ConfigValueKeyword.Null;
 
-        private static string packageDir;
-        public static string PackageDir
+        [SerializeField]
+        protected ConfigValue<BuiltinIcon> icon = ConfigValueKeyword.Null;
+
+        [SerializeField]
+        protected ConfigValue<string> text = ConfigValueKeyword.Null;
+
+        [SerializeField]
+        protected ConfigValue<string> tooltip = ConfigValueKeyword.Null;
+
+        [SerializeField, MultiLine(3)]
+        protected ConfigValue<string> description = ConfigValueKeyword.Null;
+        /// <summary>
+        /// 代码创建的实例为自动，设置面板创建的为手动，手动需要通过数据恢复实例
+        /// </summary>
+
+        internal bool manualCreated;
+
+        private int order = 0;
+        private bool isAvailable = true;
+        protected BindingSet<EditorToolbar> bindingSet;
+
+        static VisualElement toolbarLeftRoot;
+        static VisualElement toolbarRightRoot;
+        static VisualElement toolbarLeftContainer;
+        static VisualElement toolbarRightContainer;
+        public static List<EditorToolbar> tools = new List<EditorToolbar>();
+        internal static bool initalized;
+        internal static bool initalizing;
+        internal bool init;
+
+
+        public const string UserScopePrefix = "User/";
+        public const string ProjectScopePrefix = "Project/";
+
+        public const string GROUP_DEFAULT = ProjectScopePrefix + "Default";
+        public const string GROUP_SCENE = ProjectScopePrefix + "Scene";
+        public const string GROUP_FILE = ProjectScopePrefix + "File";
+        public const string GROUP_DATA = ProjectScopePrefix + "Data";
+
+        public const string USER_GROUP_DEFAULT = UserScopePrefix + "Default";
+
+        public string Id { get => id; set => PropertyChanged.Invoke(this, nameof(Id), ref id, value); }
+
+        public virtual string Name { get => name; set => PropertyChanged.Invoke(this, nameof(Name), ref name, value); }
+
+        public virtual string Text { get => text; set => PropertyChanged.Invoke(this, nameof(Text), ref text, value); }
+
+        public virtual Texture2D Icon
         {
-            get
-            {
-                if (string.IsNullOrEmpty(packageDir))
-                    packageDir = GetPackageDirectory(PackageName);
-                return packageDir;
-            }
+            get => icon.Keyword == ConfigValueKeyword.Undefined ? icon.Value.Image : null;
+            set => PropertyChanged.Invoke(this, nameof(Icon), ref icon, new BuiltinIcon(value));
         }
 
-        static GUIStyle ToolbarButtonStyle
+        public virtual string Tooltip { get => tooltip; set => PropertyChanged.Invoke(this, nameof(Tooltip), ref tooltip, value); }
+
+        public virtual string Description { get => description; set => PropertyChanged.Invoke(this, nameof(Description), ref description, value); }
+
+        public bool Enabled
         {
-            get
+            get => enabled;
+            set
             {
-                if (toolbarButtonStyle == null)
+                if (PropertyChanged.Invoke(this, nameof(Enabled), ref enabled, value))
                 {
-                    toolbarButtonStyle = new GUIStyle(EditorStyles.toolbarButton);
-                    toolbarButtonStyle.padding = new RectOffset(5, 5, 2, 2);
+                    if (init)
+                    {
+                        if (enabled)
+                        {
+                            Enable();
+                            Refresh();
+                        }
+                        else
+                        {
+                            Disable();
+                        }
+                    }
                 }
-                return toolbarButtonStyle;
             }
         }
-        static GUIStyle ToolbarMenuButtonStyle
+
+
+        [NonSerialized]
+        internal ToolbarGroup group;
+        public ToolbarGroup Group
         {
-            get
+            get => group;
+            set
             {
-                if (toolbarMenuButtonStyle == null)
+                //if (PropertyChanged.Invoke(this, nameof(Group), ref group, value))
+
+                //    if (value!= null)
+                //    {
+                //        group.Add(this);
+                //    }
+                //}
+                if (group != value)
                 {
-                    toolbarMenuButtonStyle = new GUIStyle(EditorStyles.toolbarButton);
-                    toolbarMenuButtonStyle.padding = new RectOffset(9, 5, 2, 2);
+                    if (value != null)
+                    {
+                        value.Add(this);
+                    }
+                    else
+                    {
+                        if (group != null)
+                        {
+                            group.Remove(this);
+                            group = null;
+                        }
+                    }
                 }
-                return toolbarMenuButtonStyle;
             }
         }
 
-        public static List<EditorToolbar> toolbars = new List<EditorToolbar>();
+        public int Order
+        {
+            get => order;
+            set => PropertyChanged.Invoke(this, nameof(Order), ref order, value);
+        }
 
-        static EditorToolbar()
+        public virtual bool IsAvailable
+        {
+            get => isAvailable;
+            set => PropertyChanged.Invoke(this, nameof(IsAvailable), ref isAvailable, value);
+        }
+
+        public bool ManualCreated { get => manualCreated; }
+
+        public virtual object UserSettings { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public EditorToolbar()
         {
 
-            foreach (var type in AppDomain.CurrentDomain.GetAssemblies().Referenced(typeof(EditorToolbar).Assembly)
-                .SelectMany(o => o.GetTypes())
-                .Where(o => o != typeof(EditorToolbar) && !o.IsAbstract && typeof(EditorToolbar).IsAssignableFrom(o)))
-            {
-                EditorToolbar toolbar = (EditorToolbar)Activator.CreateInstance(type);
-                toolbars.Add(toolbar);
-            }
-
-            EditorToolbarSettings.Settings.Load(toolbars);
-
-            EditorApplication.delayCall += Initalize;
         }
 
-        static void Initalize()
+        public EditorToolbar(string id)
+        {
+            this.id = id;
+        }
+
+
+        [InitializeOnLoadMethod]
+        static void InitializeOnLoadMethod()
+        {
+            Initalize();
+
+            EditorApplication.delayCall += DelayInitalize;
+        }
+
+
+        internal static void Initalize()
+        {
+            if (initalizing || initalized)
+                return;
+            initalized = false;
+            initalizing = true;
+
+            foreach (var tool in tools.ToArray())
+            {
+                if (tool.group != null)
+                {
+                    tool.group.Remove(tool);
+                }
+            }
+            tools.Clear();
+
+            //Debug.Log("start count " + EditorToolbarSettings.Groups.SelectMany(o => o.items).Count());
+            //DateTime dt = DateTime.Now;
+            //foreach (var method in AppDomain.CurrentDomain.GetAssemblies().Referenced(typeof(EditorToolbar).Assembly)
+            //    .SelectMany(o => o.GetTypes())
+            //    .Where(o => o.IsSealed || o.IsSubclassOf(typeof(EditorToolbar)))
+            //    .SelectMany(o => o.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)))
+            //{
+            //    if (!method.IsDefined(typeof(EditorToolbarAttribute), false))
+            //        continue;
+            foreach (var method in TypeCache.GetMethodsWithAttribute(typeof(EditorToolbarAttribute)))
+            {
+                if (!method.IsStatic)
+                {
+                    Debug.LogError($"Method '{method}' not static");
+                    continue;
+                }
+                if (typeof(EditorToolbar).IsAssignableFrom(method.ReturnType))
+                {
+                    if (method.GetParameters().Length != 0)
+                        continue;
+                    EditorToolbar tool = method.Invoke(null, null) as EditorToolbar;
+                    if (tool == null)
+                        continue;
+                    if (string.IsNullOrEmpty(tool.Id))
+                    {
+                        tool.Id = method.ToString();
+                    }
+                    if (string.IsNullOrEmpty(tool.Name))
+                        tool.Name = method.Name;
+                    tool.manualCreated = false;
+                    //if (tool.Group == null)
+                    //{
+                    //    tool.Group = EditorToolbarSettings.DefaultGroup;
+                    //}
+                    tools.Add(tool);
+                }
+                else if (typeof(ToolbarGroup).IsAssignableFrom(method.ReturnType))
+                {
+                    if (method.GetParameters().Length != 0)
+                        continue;
+                    ToolbarGroup group = method.Invoke(null, null) as ToolbarGroup;
+                    if (group == null)
+                        continue;
+
+                    foreach (var tool in group.Items)
+                    {
+                        if (tools.Contains(tool))
+                            continue;
+
+                        if (string.IsNullOrEmpty(tool.Id))
+                        {
+                            tool.Id = GetId($"{tool.GetType().FullName}:{method}");
+                        }
+                        if (string.IsNullOrEmpty(tool.Name))
+                            tool.Name = tool.GetType().Name;
+
+                        tool.manualCreated = false;
+                        tools.Add(tool);
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"{nameof(EditorToolbarAttribute)} method return type is '{nameof(EditorToolbar)}' or '{nameof(ToolbarGroup)}'");
+                }
+
+            }
+
+            //Debug.Log(tools.Count + ", " + EditorToolbarSettings.Groups.SelectMany(o => o.items).Count());
+            //Debug.Log("EditorToolbar.Load " + (DateTime.Now.Subtract(dt).TotalMilliseconds) + "ms");
+            EditorToolbarSettings.Settings.Load();
+            initalizing = false;
+            initalized = true;
+
+        }
+
+
+        static void DelayInitalize()
         {
 
             var toolbars = Resources.FindObjectsOfTypeAll(toolbarType);
-            currentToolbar = toolbars.Length > 0 ? (ScriptableObject)toolbars[0] : null;
+            var currentToolbar = toolbars.Length > 0 ? (ScriptableObject)toolbars[0] : null;
             if (currentToolbar != null)
             {
+                VisualElement visualTree = null;
                 if (viewVisualTreeProperty != null)
                 {
-                    var visualTree = (VisualElement)viewVisualTreeProperty.GetValue(currentToolbar, null);
-                    guiContainer = (IMGUIContainer)visualTree[0];
-                    guiContainer.onGUIHandler -= _OnGUI;
-                    guiContainer.onGUIHandler += _OnGUI;
+                    visualTree = (VisualElement)viewVisualTreeProperty.GetValue(currentToolbar, null);
+
                 }
                 else
                 {
@@ -108,68 +296,122 @@ namespace UnityEditor.Toolbars
                     var toolbar = currentToolbar;
                     var windowBackendProperty = toolbar.GetType().GetProperty("windowBackend", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                     var win = windowBackendProperty.GetValue(toolbar);
-                    var visualTree = (VisualElement)win.GetType().GetProperty("visualTree").GetValue(win);
+                    visualTree = (VisualElement)win.GetType().GetProperty("visualTree").GetValue(win);
 
-                    if (visualTree != null)
-                    {
-                        guiContainer = (IMGUIContainer)visualTree[0];
-                        guiContainer.onGUIHandler -= _OnGUI;
-                        guiContainer.onGUIHandler += _OnGUI;
-                    }
                 }
 
 
-                //var handler = (Action)imguiContainerOnGuiField.GetValue(guiContainer);
-                //bool b =  == handler;
+                if (visualTree != null)
+                {
+                    var toolbarZoneLeftAlign = visualTree.Q("ToolbarZoneLeftAlign");
+                    var toolbarZoneRightAlign = visualTree.Q("ToolbarZoneRightAlign");
 
-                //imguiContainerOnGuiField.SetValue(guiContainer, handler);
-                //Button btn = new UnityEngine.UIElements.Button(() =>
-                // {
-                //     Debug.Log("FFF");
-                // });
-                //btn.text = "A";
-                //visualTree.Add(btn);
+                    if (toolbarZoneLeftAlign != null)
+                    {
+                        #region Left Toolbar
+
+                        toolbarLeftRoot = new VisualElement();
+                        toolbarLeftRoot.style.flexDirection = FlexDirection.Row;
+
+                        toolbarLeftContainer = new VisualElement();
+                        toolbarLeftContainer.AddToClassList("toolbar-container");
+                        toolbarLeftContainer.AddToClassList("toolbar-container-left");
+                        toolbarLeftContainer.style.flexDirection = FlexDirection.Row;
+
+                        EditorToolbarUtility.AddStyle(toolbarLeftContainer, typeof(EditorToolbar), "EditorToolbar");
+                        toolbarZoneLeftAlign.Add(toolbarLeftContainer);
+
+                        #endregion
+
+                        #region Right Toolbar
+
+                        toolbarRightContainer = new VisualElement();
+                        EditorToolbarUtility.AddStyle(toolbarRightContainer, typeof(EditorToolbar), "EditorToolbar");
+                        toolbarRightContainer.AddToClassList("toolbar-container");
+                        toolbarRightContainer.AddToClassList("toolbar-container-right");
+                        toolbarZoneRightAlign.Add(toolbarRightContainer);
+
+                        #endregion
+                    }
+                    else
+                    {
+                        Debug.LogError("toolbarZoneLeftAlign null");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("visualTree null");
+                }
+            }
+
+            Rebuild();
+            EditorApplication.update += _Update;
+
+        }
+        private void Init()
+        {
+            bindingSet = new BindingSet<EditorToolbar>(this);
+            //if (group == null)
+            //    Group = EditorToolbarSettings.DefaultGroup;
+            init = true;
+        }
+
+        //UnityException: FromJsonOverwriteInternal is not allowed to be called during serialization, call it from OnEnable instead. Called from ScriptableObject.
+        //ScriptableObject 序列化对象不能使用 OnEnable, OnDisable 名称
+        public virtual void Enable()
+        {
+
+        }
+
+        public virtual void Disable()
+        {
+            if (bindingSet != null)
+            {
+                bindingSet.Unbind();
+                bindingSet = null;
             }
         }
 
+        protected bool SetProperty<TValue>(string propertyName, ref TValue field, TValue newValue) => PropertyChanged.Invoke(this, propertyName, ref field, newValue);
 
-        [SerializeField]
-        private bool enabled = false;
-        public virtual bool IsEnabled
+        protected void NotifyPropertyChanged(string propertyName)
         {
-            get => enabled;
-            set => enabled = value;
+            PropertyChanged.Invoke(this, propertyName);
         }
 
-        [SerializeField]
-        private ToolbarPosition position = ToolbarPosition.LeftToolbar;
-        public virtual ToolbarPosition Position
+        static void _Update()
         {
-            get => position;
-            set => position = value;
+            foreach (var tool in EditorToolbarSettings.AllGroups.SelectMany(o => o.Items))
+            {
+                tool.OnUpdate();
+            }
         }
 
-        [SerializeField]
-        private int order = 0;
-        public virtual int Order
+        public static void Rebuild()
         {
-            get => order;
-            set => order = value;
+
+            foreach (var tool in EditorToolbarSettings.AllGroups.SelectMany(o => o.Items))
+            {
+                if (tool.Enabled && tool.init)
+                {
+                    tool.Disable();
+                    tool.init = false;
+                }
+            }
+
+            if (toolbarLeftContainer != null)
+            {
+                toolbarLeftContainer.Clear();
+                CreateToolbar(toolbarLeftContainer, EditorToolbarSettings.AllGroups.Where(o => o.Enabled && (o.Position.Keyword == ConfigValueKeyword.Null || o.Position == ToolbarPosition.LeftToolbar)));
+            }
+
+            if (toolbarRightContainer != null)
+            {
+                toolbarRightContainer.Clear();
+                CreateToolbar(toolbarRightContainer, EditorToolbarSettings.AllGroups.Where(o => o.Enabled && o.Position == ToolbarPosition.RightToolbar));
+            }
         }
 
-        public virtual bool IsAvailable
-        {
-            get => true;
-        }
-
-        [SerializeField]
-        private bool space;
-
-        public bool Space
-        {
-            get => space;
-            set => space = value;
-        }
 
         public GUIContent GetGUIConent(string icon, string text, string tooltip)
         {
@@ -182,214 +424,308 @@ namespace UnityEditor.Toolbars
             return new GUIContent(text, tooltip);
         }
 
-
-        public virtual void OnGUI()
+        static void CreateToolbar(VisualElement container, IEnumerable<ToolbarGroup> groups)
         {
 
-        }
-
-        static void _OnGUI()
-        {
-            guiContainer.MarkDirtyRepaint();
-            //OnToolbarGUI?.Invoke();
-
-            if (commandStyle == null)
+            foreach (var g in groups.ToArray())
             {
-                commandStyle = new GUIStyle("CommandLeft");
-            }
-
-            var screenWidth = EditorGUIUtility.currentViewWidth;
-
-            // Following calculations match code reflected from Toolbar.OldOnGUI()
-            float playButtonsPosition = (screenWidth - 100) / 2;
-
-            Rect leftRect = new Rect(0, 0, screenWidth, Screen.height);
-            leftRect.xMin += 10; // Spacing left
-            leftRect.xMin += 32 * toolCount; // Tool buttons
-            leftRect.xMin += 20; // Spacing between tools and pivot
-            leftRect.xMin += 64 * 2; // Pivot buttons
-            leftRect.xMax = playButtonsPosition - 20;
-
-            Rect rightRect = new Rect(0, 0, screenWidth, Screen.height);
-            rightRect.xMin = playButtonsPosition - 20;
-            rightRect.xMin += commandStyle.fixedWidth * 3; // Play buttons
-            rightRect.xMax = screenWidth;
-            rightRect.xMax -= 10; // Spacing right
-            rightRect.xMax -= 80; // Layout
-            rightRect.xMax -= 10; // Spacing between layout and layers
-            rightRect.xMax -= 80; // Layers
-            rightRect.xMax -= 20; // Spacing between layers and account
-            rightRect.xMax -= 80; // Account
-            rightRect.xMax -= 10; // Spacing between account and cloud
-            rightRect.xMax -= 32; // Cloud
-            rightRect.xMax -= 10; // Spacing between cloud and collab
-            rightRect.xMax -= 0; // Colab
-
-            // Add spacing around existing controls
-            leftRect.xMin += 10;
-            leftRect.xMax -= 10;
-            rightRect.xMin += 10;
-            rightRect.xMax -= 10;
-
-            // Add top and bottom margins
-            leftRect.y = 5;
-            leftRect.height = 24;
-            rightRect.y = 5;
-            rightRect.height = 24;
-
-            if (leftRect.width > 0)
-            {
-                using (new GUILayout.AreaScope(leftRect))
-                using (new GUILayout.HorizontalScope())
+                VisualElement elemGroup = null;
+                foreach (var toolConfig in g.items)
                 {
-                    GUILayout.FlexibleSpace();
+                    if (!toolConfig.Enabled)
+                        continue;
 
-                    GUIToolbar(toolbars.OrderBy(o => o.Order)
-                        .Where(o => o.Position == ToolbarPosition.LeftToolbar));
-
-                    OnToolbarLeftGUI?.Invoke();
-                }
-            }
-            if (rightRect.width > 0)
-            {
-                using (new GUILayout.AreaScope(rightRect))
-                using (new GUILayout.HorizontalScope())
-                {
-                    OnToolbarRightGUI?.Invoke();
-                    GUIToolbar(toolbars.OrderBy(o => o.Order)
-                        .Where(o => o.Position == ToolbarPosition.RightToolbar));
-                    GUILayout.FlexibleSpace();
-                }
-            }
-        }
-
-        static void GUIToolbar(IEnumerable<EditorToolbar> toolbars)
-        {
-            Color color = GUI.color;
-            GUI.color *= new Color(1f, 1f, 1f, 0.8f);
-            foreach (var toolbar in toolbars)
-            {
-                if (!toolbar.IsEnabled)
-                    continue;
-
-                var enabled = GUI.enabled;
-                GUI.enabled = toolbar.IsAvailable;
-                toolbar.OnGUI();
-                GUI.enabled = enabled;
-                //if (toolbar.Space)
-                //    GUILayout.Space(16);
-            }
-            GUI.color = color;
-        }
-
-
-
-        //2020/9/1
-        private static string GetPackageDirectory(string packageName)
-        {
-            string path = Path.Combine("Packages", packageName);
-            if (Directory.Exists(path) && File.Exists(Path.Combine(path, "package.json")))
-                return path;
-
-            foreach (var dir in Directory.GetDirectories("Assets", "*", SearchOption.AllDirectories))
-            {
-                if (string.Equals(Path.GetFileName(dir), packageName, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    if (File.Exists(Path.Combine(dir, "package.json")))
-                        return dir;
-                }
-            }
-
-            foreach (var pkgPath in Directory.GetFiles("Assets", "package.json", SearchOption.AllDirectories))
-            {
-                try
-                {
-                    if (JsonUtility.FromJson<UnityPackage>(File.ReadAllText(pkgPath, System.Text.Encoding.UTF8)).name == packageName)
+                    EditorToolbar tool;
+                    try
                     {
-                        return Path.GetDirectoryName(pkgPath);
+                        tool = toolConfig.GetOrCreateTarget();
+                        if (tool == null)
+                            continue;
                     }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError(ex);
+                        continue;
+                    }
+
+                    if (elemGroup == null)
+                    {
+                        elemGroup = g.CreateGroupUI();
+                        container.Add(elemGroup);
+                    }
+
+                    if (!tool.init)
+                    {
+                        toolConfig.UpdateTarget();
+                        tool.Init();
+                        tool.Enable();
+                    }
+                    tool.CreateUI(elemGroup);
+                    tool.bindingSet.Bind();
+                    tool.Refresh();
                 }
-                catch { }
+            }
+        }
+
+        protected virtual void OnUpdate()
+        {
+
+        }
+
+        protected virtual void CreateUI(VisualElement parent)
+        {
+
+        }
+
+        protected static Button CreateButton(string text, Texture2D icon)
+        {
+            ToolbarButton button = new ToolbarButton();
+            button.AddToClassList("toolbar-button");
+
+            if (icon && string.IsNullOrEmpty(text))
+            {
+                //button.AddToClassList("toolbar-icon-button");
             }
 
-            return null;
-        }
-        [Serializable]
-        class UnityPackage
-        {
-            public string name;
-        }
-
-
-        public void GUIButton(GUIContent content, Action onClick)
-        {
-            Rect rect = GetRect(content, ToolbarButtonStyle);
-
-            GUI.BeginGroup(rect);
-
-            //GUI.color = new Color(1, 1, 1, 0.3f);
-            if (GUI.Button(new Rect(0, 0, rect.width, rect.height), content, EditorStyles.toolbarButton))
+            bool hasIcon = false, hasLabel = false;
+            var _icon = new VisualElement();
+            _icon.AddToClassList("toolbar-button_icon");
+            _icon.style.backgroundImage = icon;
+            if (!icon)
             {
-                onClick?.Invoke();
-            }
-            //GUI.color = Color.white;
-
-            GUI.EndGroup();
-        }
-
-        Rect GetRect(GUIContent content, GUIStyle style)
-        {
-            int width = 4;
-            if (!string.IsNullOrEmpty(content.text))
-                width += (int)style.CalcSize(new GUIContent(content.text)).x;
-            if (content.image != null)
-                width += 28;
-            Rect rect = GUILayoutUtility.GetRect(content, style, GUILayout.Width(width));
-            return rect;
-        }
-
-        public void GUIMenuButton(GUIContent content, Action onClick, Action onMenu)
-        {
-            Rect rect = GetRect(content, ToolbarMenuButtonStyle);
-            GUIStyle menuBtnStyle = null;
-            Rect menuBtnRect = new Rect();
-            GUI.BeginGroup(rect);
-            Matrix4x4 matrix;
-
-            menuBtnStyle = new GUIStyle("label");
-            menuBtnStyle.padding = new RectOffset(0, 0, 0, 0);
-            menuBtnStyle.fontSize += 3;
-            menuBtnStyle.margin = new RectOffset();
-            int menuBtnWidth = 10, menuBtnHeight = 10;
-
-            matrix = GUI.matrix;
-            menuBtnRect = new Rect(0, rect.height - menuBtnHeight, menuBtnWidth, menuBtnHeight);
-            var rect1 = new Rect(menuBtnRect.x, menuBtnRect.y, menuBtnRect.width, menuBtnRect.height);
-            //GUIUtility.RotateAroundPivot(45, rect1.center);
-            //GUI.matrix = Matrix4x4.TRS(new Vector3(-2+ rect1.center.x, 3+ rect1.center.y, 0), Quaternion.Euler(0, 0, 45), Vector3.one)*GUI.matrix;
-            if (GUI.Button(rect1, GUIContent.none, "button"))
-            {
-                GUI.matrix = matrix;
-                onMenu?.Invoke();
+                _icon.style.display = DisplayStyle.None;
             }
             else
-                GUI.matrix = matrix;
-
-            //GUI.color = new Color(1, 1, 1, 0.3f);
-            if (GUI.Button(new Rect(0, 0, rect.width, rect.height), content, EditorStyles.toolbarButton))
             {
-                onClick?.Invoke();
+                hasIcon = true;
             }
-            //GUI.color = Color.white;
+            button.Add(_icon);
 
-            GUI.Label(menuBtnRect, "◣", menuBtnStyle);
 
-            GUI.EndGroup();
+            var label = new Label();
+            label.AddToClassList("toolbar-button_label");
+            label.text = text;
+            if (string.IsNullOrEmpty(text))
+            {
+                label.style.display = DisplayStyle.None;
+            }
+            else
+            {
+                hasLabel = true;
+            }
+            button.Add(label);
+
+
+            VisualElement arrow = new VisualElement();
+            arrow.AddToClassList("toolbar-button_arrow");
+            arrow.style.display = DisplayStyle.None;
+
+            VisualElement arrowSeparator = new VisualElement();
+            arrowSeparator.AddToClassList("toolbar-button_arrow_separator");
+            arrow.Add(arrowSeparator);
+
+            VisualElement arrowIcon = new VisualElement();
+            arrowIcon.AddToClassList("unity-toolbar-menu__arrow");
+            arrowIcon.AddToClassList("toolbar-button_arrow_icon");
+            arrow.Add(arrowIcon);
+            button.Add(arrow);
+
+            if (hasIcon && hasLabel)
+            {
+                button.AddToClassList("toolbar-button-text-icon");
+            }
+            else if (hasIcon)
+            {
+                button.AddToClassList("toolbar-button-icon");
+            }
+            else if (hasLabel)
+            {
+                button.AddToClassList("toolbar-button-text");
+            }
+
+            return button;
+        }
+        protected Button CreateContextMenuButton(Action<DropdownMenu> createMenu)
+        {
+            return CreateContextMenuButton(null, null, createMenu);
+        }
+
+        protected Button CreateContextMenuButton(string text, Texture2D icon, Action<DropdownMenu> createMenu)
+        {
+            Button button = CreateButton(text, icon);
+
+            button.AddManipulator(new ContextualMenuManipulator((e) =>
+            {
+                createMenu?.Invoke(e.menu);
+            }));
+            return button;
+        }
+
+        protected static Button CreateMenuButton(string text, Texture2D icon, Action<DropdownMenu> createMenu)
+        {
+            var btn = CreateButton(text, icon);
+            btn.AddToClassList("toolbar-button-menu");
+            var arrow = btn.Q(null, "toolbar-button_arrow");
+            arrow.AddManipulator(new MenuManipulator((evt) =>
+            {
+                if (arrow == evt.target)
+                {
+                    createMenu?.Invoke(evt.menu);
+                }
+            }, MouseButton.LeftMouse));
+            arrow.style.display = DisplayStyle.Flex;
+            return btn;
+        }
+
+        public virtual void Refresh()
+        {
+            if (!Enabled) return;
+
+            if (bindingSet != null)
+            {
+                bindingSet.UpdateSourceToTarget();
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"{GetType().Name}: {Name}";
         }
 
 
+        public static string GetId(string text) => Hash32(Encoding.UTF8.GetBytes(text ?? string.Empty)).ToString();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string GetId(Type type) => Hash32(type.FullName).ToString();
 
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static uint Hash32(string text) => Hash32(Encoding.UTF8.GetBytes(text));
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static uint Hash32(Type type) => Hash32(type.FullName);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static uint Hash32(byte[] buffer)
+        {
+            int length = buffer.Length;
+            uint seed = 0;
+
+            const uint prime1 = 2654435761u;
+            const uint prime2 = 2246822519u;
+            const uint prime3 = 3266489917u;
+            const uint prime4 = 0668265263u;
+            const uint prime5 = 0374761393u;
+
+            uint hash = seed + prime5;
+
+            int offset = 0;
+            if (length >= 16)
+            {
+                uint val0 = seed + prime1 + prime2;
+                uint val1 = seed + prime2;
+                uint val2 = seed + 0;
+                uint val3 = seed - prime1;
+
+                int count = length >> 4;
+                for (int i = 0; i < count; i++)
+                {
+                    var pos0 = BitConverter.ToUInt32(buffer, offset + 0);
+                    var pos1 = BitConverter.ToUInt32(buffer, offset + 4);
+                    var pos2 = BitConverter.ToUInt32(buffer, offset + 8);
+                    var pos3 = BitConverter.ToUInt32(buffer, offset + 12);
+
+                    val0 += pos0 * prime2;
+                    val0 = (val0 << 13) | (val0 >> (32 - 13));
+                    val0 *= prime1;
+
+                    val1 += pos1 * prime2;
+                    val1 = (val1 << 13) | (val1 >> (32 - 13));
+                    val1 *= prime1;
+
+                    val2 += pos2 * prime2;
+                    val2 = (val2 << 13) | (val2 >> (32 - 13));
+                    val2 *= prime1;
+
+                    val3 += pos3 * prime2;
+                    val3 = (val3 << 13) | (val3 >> (32 - 13));
+                    val3 *= prime1;
+
+                    offset += 16;
+                }
+
+                hash = ((val0 << 01) | (val0 >> (32 - 01))) +
+                       ((val1 << 07) | (val1 >> (32 - 07))) +
+                       ((val2 << 12) | (val2 >> (32 - 12))) +
+                       ((val3 << 18) | (val3 >> (32 - 18)));
+            }
+
+            hash += (uint)length;
+
+            length &= 15;
+            while (length >= 4)
+            {
+                hash += BitConverter.ToUInt32(buffer, offset) * prime3;
+                hash = ((hash << 17) | (hash >> (32 - 17))) * prime4;
+                offset += 4;
+                length -= 4;
+            }
+            while (length > 0)
+            {
+                hash += buffer[offset] * prime5;
+                hash = ((hash << 11) | (hash >> (32 - 11))) * prime1;
+                offset++;
+                --length;
+            }
+
+            hash ^= hash >> 15;
+            hash *= prime2;
+            hash ^= hash >> 13;
+            hash *= prime3;
+            hash ^= hash >> 16;
+
+            return hash;
+        }
+
+
+        [Serializable]
+        public class Item
+        {
+            [SerializeField]
+            private string name;
+            public string Name { get => name; set => name = value; }
+
+            [SerializeField]
+            private bool isDefault;
+            public bool IsDefault { get => isDefault; set => isDefault = value; }
+
+            [SerializeField]
+            private bool isSeparator;
+            public bool IsSeparator { get => isSeparator; set => isSeparator = value; }
+
+            [SerializeField]
+            private string description;
+            public string Description { get => description; set => description = value; }
+
+            public static readonly Item Separator = new Item() { isSeparator = true };
+
+        }
+    }
+
+    public enum ToolbarStyle
+    {
+        /// <summary>
+        /// 按钮样式
+        /// </summary>
+        Button,
+        /// <summary>
+        /// 下拉菜单样式
+        /// </summary>
+        Menu,
+        /// <summary>
+        /// 按钮和下拉菜单样式
+        /// </summary>
+        MenuButton,
     }
 
 }

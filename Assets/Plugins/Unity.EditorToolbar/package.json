@@ -1,15 +1,19 @@
 {
-  "name": "unity.editortoolbar",
+  "name": "com.unity.editor.toolbar",
   "displayName": "Editor Toolbar",
-  "version": "0.0.1",
-  "unity": "2019.1",
+  "version": "0.0.11-preview-3",
   "keywords": [
-    "editor",
+    "tool",
     "toolbar"
   ],
-  "category": "Unity",
+  "category": "Tool",
   "description": "Editor Toolbar",
   "dependencies": {
-    "unity.guiextensions": "0.0.1"
+    "com.unity.binding": "0.0.2",
+    "com.unity.serialization": "0.0.1",
+    "com.unity.editor.ui": "0.0.2"
+  },
+  "author": {
+    "name": ""
   }
 }

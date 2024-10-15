@@ -1,0 +1,95 @@
+#settings-title {
+    font-size: 20px;
+    -unity-font-style: bold;
+    margin-bottom: 5px;
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+.toolbar-items {
+    margin-left: 10px;
+}
+
+.toolbar-item {
+    margin-left: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.toolbar-item Toggle {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 0;
+    margin-right: 3px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.toolbar-items-title {
+    -unity-font-style: bold;
+    padding-top: 10px;
+    padding-bottom: 3px;
+    margin-left: 2px;
+    font-size: 14px;
+}
+
+.toolbar-item-position {
+    padding-left: 3px;
+}
+
+.toolbar-item-position-name {
+    -unity-font-style: bold;
+    font-size: 14px;
+}
+
+.toolbar-item-group {
+    margin-left: 0;
+    flex-direction: row;
+    padding-left: 3px;
+    align-items: center;
+}
+
+.toolbar-item-group-name {
+    -unity-font-style: bold;
+    font-size: 13px;
+}
+
+.toolbar-item-tool {
+    margin-left: 20px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.toolbar-item-tool-name {
+    flex-grow: 0;
+}
+
+Toolbar {
+    border-top-color: rgba(0, 0, 0, 0.38);
+    border-top-width: 1px;
+    border-left-color: rgba(0, 0, 0, 0.38);
+    border-right-color: rgba(0, 0, 0, 0.38);
+    border-bottom-color: rgba(0, 0, 0, 0.38);
+}
+
+Toolbar * {
+    -unity-text-align: middle-left;
+}
+
+#addMenu .unity-toolbar-menu__text {
+    font-size: 20px;
+    margin-top: -4px;
+    padding-top: 0;
+    -unity-font-style: normal;
+}
+
+#workspace {
+    width: 70px;
+    -unity-text-align: middle-left;
+}
+
+.unity-list-view__empty-label {
+    display: none;
+}

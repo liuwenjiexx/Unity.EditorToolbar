@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Plugins/Unity.EditorToolbar/Editor/USS/MenuToolbarWindow.uss?fileID=7433441132597879392&amp;guid=a6e603730a3a8224b85866a4c5be03cb&amp;type=3#MenuToolbarWindow" />
+    <ui:TextField picking-mode="Ignore" label="Text" name="textField" style="display: none;" />
+    <ui:TextField picking-mode="Ignore" label="Tooltip" name="tooltipField" style="display: none;" />
+    <uie:Toolbar>
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="groupField" />
+        <uie:ToolbarMenu display-tooltip-when-elided="true" name="groupField" style="display: none;" />
+        <uie:ToolbarSearchField focusable="true" style="flex-grow: 1;" />
+    </uie:Toolbar>
+    <ui:ListView focusable="true" fixed-item-height="20" />
+</ui:UXML>

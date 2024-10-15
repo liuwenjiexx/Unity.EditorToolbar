@@ -1,15 +1,7 @@
 {
     "groups": [
         {
-            "items": [
-                {
-                    "name": "cmd",
-                    "file": "cmd",
-                    "argument": "",
-                    "separator": false,
-                    "isDeffault": false
-                }
-            ],
+            "items": [],
             "isDefault": true,
             "icon": "",
             "name": "Command",

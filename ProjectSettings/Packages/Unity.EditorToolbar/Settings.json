@@ -1,20 +1,29 @@
 {
     "items": [
         {
-            "type": "UnityEditor.Toolbars.CommandLineTool, UnityEditor.Toolbar, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "json": "{\"enabled\":true,\"position\":0,\"order\":0,\"space\":false}"
+            "type": "UnityEditor.Toolbars.PlayTool",
+            "id": "ToolbarTest:PlayScene",
+            "json": "{\"id\":\"ToolbarTest:PlayScene\",\"enabled\":true,\"position\":0,\"order\":0,\"space\":false}"
         },
         {
-            "type": "UnityEditor.Toolbars.OpenFileOrFolderTool, UnityEditor.Toolbar, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "json": "{\"enabled\":true,\"position\":0,\"order\":0,\"space\":false}"
+            "type": "UnityEditor.Toolbars.OpenPreviousSceneTool",
+            "id": "ToolbarTest:OpenPreviousScene",
+            "json": "{\"id\":\"ToolbarTest:OpenPreviousScene\",\"enabled\":true,\"position\":0,\"order\":0,\"space\":false}"
         },
         {
-            "type": "UnityEditor.Toolbars.OpenPreviousSceneTool, UnityEditor.Toolbar, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "json": "{\"enabled\":true,\"position\":0,\"order\":0,\"space\":false}"
+            "type": "UnityEditor.Toolbars.OpenFileTool",
+            "id": "ToolbarTest:OpenFileTool",
+            "json": "{\"id\":\"ToolbarTest:OpenFileTool\",\"enabled\":true,\"position\":0,\"order\":0,\"space\":false}"
         },
         {
-            "type": "UnityEditor.Toolbars.PlayTool, UnityEditor.Toolbar, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "json": "{\"enabled\":true,\"position\":0,\"order\":0,\"space\":false}"
+            "type": "UnityEditor.Toolbars.CommandLineTool",
+            "id": "ToolbarTest:OpenProjectDirectory",
+            "json": "{\"id\":\"ToolbarTest:OpenProjectDirectory\",\"enabled\":true,\"position\":0,\"order\":0,\"space\":false}"
+        },
+        {
+            "type": "UnityEditor.Toolbars.CommandLineTool",
+            "id": "ToolbarTest:OpenExcel",
+            "json": "{\"id\":\"ToolbarTest:OpenExcel\",\"enabled\":true,\"position\":0,\"order\":0,\"space\":false}"
         }
     ]
 }

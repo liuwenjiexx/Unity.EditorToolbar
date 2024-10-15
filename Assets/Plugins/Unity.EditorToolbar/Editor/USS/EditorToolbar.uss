@@ -1,0 +1,141 @@
+VisualElement {
+}
+
+.toolbar-container-left {
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-grow: 1;
+    flex-basis: 100%;
+}
+
+.toolbar-container-right {
+    flex-basis: 100%;
+    flex-direction: row;
+}
+
+.toolbar-group {
+    flex-direction: row;
+    margin-left: 5px;
+    margin-right: 5px;
+    align-items: center;
+}
+
+.toolbar-group > * {
+    height: 20px;
+    margin-right: -1px;
+    margin-left: 0;
+}
+
+.toolbar-group-icon {
+    margin-right: 2px;
+    margin-left: 0;
+    height: 18px;
+    width: 18px;
+}
+
+.toolbar-group-text {
+    -unity-text-align: middle-left;
+    border-left-color: rgba(113, 113, 113, 0);
+    border-right-color: rgba(113, 113, 113, 0);
+    border-top-color: rgba(113, 113, 113, 0);
+    border-bottom-color: rgba(113, 113, 113, 0);
+    border-left-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    margin-right: 3px;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.toolbar-group-text-icon .toolbar-group-text {
+    margin-right: 1px;
+}
+
+.toolbar-button {
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+    min-width: auto;
+    padding-left: 7px;
+    padding-right: 7px;
+    height: 20px;
+}
+
+.toolbar-button_icon {
+    width: 16px;
+    height: 16px;
+    -unity-text-align: middle-left;
+    margin-left: 0;
+    margin-right: 2px;
+    min-width: 16px;
+}
+
+.toolbar-button_label {
+    -unity-text-align: middle-left;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.toolbar-button.toolbar-icon-button {
+    width: 32px;
+}
+
+.toolbar-button-menu {
+    flex-direction: row;
+    padding-right: 0;
+}
+
+.toolbar-button_arrow {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-left: 2px;
+    width: 18px;
+    height: 100%;
+    -unity-background-scale-mode: stretch-to-fill;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 3px;
+}
+
+.toolbar-button_arrow:hover {
+    background-color: rgba(255, 255, 255, 0.09);
+}
+
+.toolbar-button_arrow:hover .unity-toolbar-menu__arrow {
+    -unity-background-image-tint-color: rgba(255, 255, 0, 255);
+}
+
+.toolbar-button_arrow_separator {
+    position: absolute;
+    left: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 1px;
+    border-left-color: rgba(164, 164, 164, 0.59);
+    border-right-color: rgba(164, 164, 164, 0.59);
+    border-top-color: rgba(164, 164, 164, 0.59);
+    border-bottom-color: rgba(164, 164, 164, 0.59);
+    border-left-width: 1px;
+}
+
+.toolbar-button-active {
+    background-color: rgb(128, 128, 128);
+}
+
+.toolbar-group ToolbarMenu {
+    height: 18px;
+}
+
+.toolbar-button-icon .toolbar-button_icon {
+    margin-right: 0;
+}

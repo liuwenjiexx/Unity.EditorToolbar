@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace UnityEditor.Toolbars
+namespace Unity.Toolbars.Editor
 {
 
     /// <summary>

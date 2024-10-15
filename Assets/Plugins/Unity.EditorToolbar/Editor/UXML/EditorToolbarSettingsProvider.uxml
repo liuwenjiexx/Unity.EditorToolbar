@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Plugins/Unity.EditorToolbar/Editor/USS/EditorToolbarSettingsProvider.uss?fileID=7433441132597879392&amp;guid=49d80570bf47983479437b0af9093dfb&amp;type=3#EditorToolbarSettingsProvider" />
+    <ui:Label text="Toolbar" display-tooltip-when-elided="true" name="settings-title" style="margin-left: 5px;" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <uie:Toolbar>
+            <uie:ToolbarMenu display-tooltip-when-elided="true" text="+" name="addMenu" style="display: flex;" />
+            <uie:ToolbarMenu display-tooltip-when-elided="true" name="workspace" text="Project" />
+            <uie:ToolbarButton text="↻" display-tooltip-when-elided="true" name="refresh" />
+            <uie:ToolbarButton text="New Group" display-tooltip-when-elided="true" name="newGroup" style="display: none;" />
+            <uie:ToolbarButton text="Menu Toolbar" display-tooltip-when-elided="true" name="menuToolbar" style="display: none;" />
+            <uie:ToolbarSpacer style="flex-grow: 1;" />
+        </uie:Toolbar>
+        <ui:VisualElement name="toolbar-list-container" class="Toolbar-Items" style="flex-grow: 1; flex-direction: column;">
+            <ui:Label text="Tool List" display-tooltip-when-elided="true" class="Toolbar-Items-Title" style="margin-left: 2px; display: none;" />
+            <ui:ListView focusable="true" virtualization-method="DynamicHeight" selection-type="Single" show-alternating-row-backgrounds="ContentOnly" style="flex-grow: 1;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

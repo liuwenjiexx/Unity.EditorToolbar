@@ -1,0 +1,400 @@
+{
+    "groups": [
+        {
+            "name": "Project/Scene",
+            "enabled": {
+                "keyword": 0,
+                "value": true
+            },
+            "position": {
+                "keyword": 0,
+                "value": 0
+            },
+            "icon": {
+                "keyword": 1,
+                "value": {
+                    "name": "",
+                    "assetGuid": ""
+                }
+            },
+            "text": {
+                "keyword": 1,
+                "value": ""
+            },
+            "tooltip": {
+                "keyword": 1,
+                "value": ""
+            },
+            "description": {
+                "keyword": 1,
+                "value": ""
+            },
+            "manualCreated": false,
+            "items": [
+                {
+                    "id": "Unity.Toolbars.Editor.EditorToolbar PlayScene()",
+                    "type": "Unity.Toolbars.Editor.PlayTool, Yanmonet.Toolbars.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "data": "{\"enabled\":{\"keyword\":0,\"value\":true},\"name\":{\"keyword\":0,\"value\":\"\"},\"icon\":{\"keyword\":1,\"value\":{\"name\":\"\",\"assetGuid\":\"\"}},\"text\":{\"keyword\":1,\"value\":\"\"},\"tooltip\":{\"keyword\":1,\"value\":\"\"},\"description\":{\"keyword\":1,\"value\":\"\"},\"sceneGuid\":\"9fc0d4010bbf28b4594072e72b8655ab\"}",
+                    "enabled": {
+                        "keyword": 0,
+                        "value": true
+                    },
+                    "name": {
+                        "keyword": 0,
+                        "value": ""
+                    },
+                    "icon": {
+                        "keyword": 1,
+                        "value": {
+                            "name": "",
+                            "assetGuid": ""
+                        }
+                    },
+                    "text": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "tooltip": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "manualCreated": false,
+                    "description": {
+                        "keyword": 1,
+                        "value": ""
+                    }
+                },
+                {
+                    "id": "Unity.Toolbars.Editor.EditorToolbar OpenPreviousScene()",
+                    "type": "Unity.Toolbars.Editor.OpenPreviousSceneTool, Yanmonet.Toolbars.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "data": "{\"enabled\":{\"keyword\":0,\"value\":true},\"name\":{\"keyword\":0,\"value\":\"\"},\"icon\":{\"keyword\":1,\"value\":{\"name\":\"\",\"assetGuid\":\"\"}},\"text\":{\"keyword\":1,\"value\":\"\"},\"tooltip\":{\"keyword\":1,\"value\":\"\"},\"description\":{\"keyword\":1,\"value\":\"\"}}",
+                    "enabled": {
+                        "keyword": 0,
+                        "value": true
+                    },
+                    "name": {
+                        "keyword": 0,
+                        "value": ""
+                    },
+                    "icon": {
+                        "keyword": 1,
+                        "value": {
+                            "name": "",
+                            "assetGuid": ""
+                        }
+                    },
+                    "text": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "tooltip": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "manualCreated": false,
+                    "description": {
+                        "keyword": 1,
+                        "value": ""
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Project/Default",
+            "enabled": {
+                "keyword": 0,
+                "value": true
+            },
+            "position": {
+                "keyword": 0,
+                "value": 0
+            },
+            "icon": {
+                "keyword": 1,
+                "value": {
+                    "name": "",
+                    "assetGuid": ""
+                }
+            },
+            "text": {
+                "keyword": 1,
+                "value": ""
+            },
+            "tooltip": {
+                "keyword": 1,
+                "value": ""
+            },
+            "description": {
+                "keyword": 1,
+                "value": ""
+            },
+            "manualCreated": false,
+            "items": [
+                {
+                    "id": "Unity.Toolbars.Editor.EditorToolbar CreateMyMenu()",
+                    "type": "MyMenuTool, Assembly-CSharp-Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "data": "{\"enabled\":{\"keyword\":0,\"value\":true},\"name\":{\"keyword\":0,\"value\":\"CreateMyMenu\"},\"icon\":{\"keyword\":1,\"value\":{\"name\":\"\",\"assetGuid\":\"\"}},\"text\":{\"keyword\":0,\"value\":\"My Menu\"},\"tooltip\":{\"keyword\":1,\"value\":\"\"},\"description\":{\"keyword\":1,\"value\":\"\"}}",
+                    "enabled": {
+                        "keyword": 0,
+                        "value": true
+                    },
+                    "name": {
+                        "keyword": 0,
+                        "value": "CreateMyMenu"
+                    },
+                    "icon": {
+                        "keyword": 1,
+                        "value": {
+                            "name": "",
+                            "assetGuid": ""
+                        }
+                    },
+                    "text": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "tooltip": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "manualCreated": false,
+                    "description": {
+                        "keyword": 1,
+                        "value": ""
+                    }
+                },
+                {
+                    "id": "Unity.Toolbars.Editor.EditorToolbar CreateMyTool()",
+                    "type": "MyTool, Assembly-CSharp-Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "data": "{\"enabled\":{\"keyword\":0,\"value\":true},\"name\":{\"keyword\":0,\"value\":\"CreateMyTool\"},\"icon\":{\"keyword\":1,\"value\":{\"name\":\"\",\"assetGuid\":\"\"}},\"text\":{\"keyword\":0,\"value\":\"MyTool\"},\"tooltip\":{\"keyword\":1,\"value\":\"\"},\"description\":{\"keyword\":1,\"value\":\"\"}}",
+                    "enabled": {
+                        "keyword": 0,
+                        "value": true
+                    },
+                    "name": {
+                        "keyword": 0,
+                        "value": "CreateMyTool"
+                    },
+                    "icon": {
+                        "keyword": 1,
+                        "value": {
+                            "name": "",
+                            "assetGuid": ""
+                        }
+                    },
+                    "text": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "tooltip": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "manualCreated": false,
+                    "description": {
+                        "keyword": 1,
+                        "value": ""
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Project/Data",
+            "enabled": {
+                "keyword": 0,
+                "value": true
+            },
+            "position": {
+                "keyword": 0,
+                "value": 0
+            },
+            "icon": {
+                "keyword": 1,
+                "value": {
+                    "name": "",
+                    "assetGuid": ""
+                }
+            },
+            "text": {
+                "keyword": 1,
+                "value": ""
+            },
+            "tooltip": {
+                "keyword": 1,
+                "value": ""
+            },
+            "description": {
+                "keyword": 1,
+                "value": ""
+            },
+            "manualCreated": false,
+            "items": [
+                {
+                    "id": "Unity.Toolbars.Editor.EditorToolbar OpenExcelButton()",
+                    "type": "Unity.Toolbars.Editor.CommandLineTool, Yanmonet.Toolbars.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "data": "{\"enabled\":{\"keyword\":0,\"value\":true},\"name\":{\"keyword\":0,\"value\":\"\"},\"icon\":{\"keyword\":1,\"value\":{\"name\":\"\",\"assetGuid\":\"\"}},\"text\":{\"keyword\":0,\"value\":\"Data 1\"},\"tooltip\":{\"keyword\":1,\"value\":\"\"},\"description\":{\"keyword\":1,\"value\":\"\"},\"items\":[{\"name\":\"\",\"isDefault\":false,\"isSeparator\":false,\"description\":\"\",\"commandName\":\"project://Data/Data1.xlsx\",\"arguments\":\"\"}]}",
+                    "enabled": {
+                        "keyword": 0,
+                        "value": true
+                    },
+                    "name": {
+                        "keyword": 0,
+                        "value": ""
+                    },
+                    "icon": {
+                        "keyword": 1,
+                        "value": {
+                            "name": "",
+                            "assetGuid": ""
+                        }
+                    },
+                    "text": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "tooltip": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "manualCreated": false,
+                    "description": {
+                        "keyword": 1,
+                        "value": ""
+                    }
+                },
+                {
+                    "id": "Unity.Toolbars.Editor.EditorToolbar OpenExcelMenu2()",
+                    "type": "Unity.Toolbars.Editor.CommandLineTool, Yanmonet.Toolbars.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "data": "{\"enabled\":{\"keyword\":0,\"value\":true},\"name\":{\"keyword\":0,\"value\":\"\"},\"icon\":{\"keyword\":1,\"value\":{\"name\":\"\",\"assetGuid\":\"\"}},\"text\":{\"keyword\":0,\"value\":\"Data\"},\"tooltip\":{\"keyword\":0,\"value\":\"Open Data Table\"},\"description\":{\"keyword\":1,\"value\":\"\"},\"items\":[{\"name\":\"Data 1\",\"isDefault\":true,\"isSeparator\":false,\"description\":\"\",\"commandName\":\"project://Data/Data1.xlsx\",\"arguments\":\"\"},{\"name\":\"\",\"isDefault\":false,\"isSeparator\":true,\"description\":\"\",\"commandName\":\"\",\"arguments\":\"\"},{\"name\":\"Data 2\",\"isDefault\":false,\"isSeparator\":false,\"description\":\"\",\"commandName\":\"project://Data/Data2.xlsx\",\"arguments\":\"\"}]}",
+                    "enabled": {
+                        "keyword": 0,
+                        "value": true
+                    },
+                    "name": {
+                        "keyword": 0,
+                        "value": ""
+                    },
+                    "icon": {
+                        "keyword": 1,
+                        "value": {
+                            "name": "",
+                            "assetGuid": ""
+                        }
+                    },
+                    "text": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "tooltip": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "manualCreated": false,
+                    "description": {
+                        "keyword": 1,
+                        "value": ""
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Project/File",
+            "enabled": {
+                "keyword": 0,
+                "value": true
+            },
+            "position": {
+                "keyword": 0,
+                "value": 0
+            },
+            "icon": {
+                "keyword": 1,
+                "value": {
+                    "name": "",
+                    "assetGuid": ""
+                }
+            },
+            "text": {
+                "keyword": 1,
+                "value": ""
+            },
+            "tooltip": {
+                "keyword": 1,
+                "value": ""
+            },
+            "description": {
+                "keyword": 1,
+                "value": ""
+            },
+            "manualCreated": false,
+            "items": [
+                {
+                    "id": "Unity.Toolbars.Editor.EditorToolbar OpenProjectDirectory()",
+                    "type": "Unity.Toolbars.Editor.CommandLineTool, Yanmonet.Toolbars.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "data": "{\"enabled\":{\"keyword\":0,\"value\":true},\"name\":{\"keyword\":0,\"value\":\"\"},\"icon\":{\"keyword\":1,\"value\":{\"name\":\"\",\"assetGuid\":\"\"}},\"text\":{\"keyword\":0,\"value\":\"Project Directory\"},\"tooltip\":{\"keyword\":0,\"value\":\"Open Project Directory\"},\"description\":{\"keyword\":1,\"value\":\"\"},\"items\":[{\"name\":\"Project Directory\",\"isDefault\":false,\"isSeparator\":false,\"description\":\"\",\"commandName\":\"explorer.exe\",\"arguments\":\"project://\"}]}",
+                    "enabled": {
+                        "keyword": 0,
+                        "value": true
+                    },
+                    "name": {
+                        "keyword": 0,
+                        "value": ""
+                    },
+                    "icon": {
+                        "keyword": 1,
+                        "value": {
+                            "name": "",
+                            "assetGuid": ""
+                        }
+                    },
+                    "text": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "tooltip": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "manualCreated": false,
+                    "description": {
+                        "keyword": 1,
+                        "value": ""
+                    }
+                },
+                {
+                    "id": "Unity.Toolbars.Editor.EditorToolbar OpenFileTool()",
+                    "type": "Unity.Toolbars.Editor.OpenFileTool, Yanmonet.Toolbars.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "data": "{\"enabled\":{\"keyword\":0,\"value\":true},\"name\":{\"keyword\":0,\"value\":\"\"},\"icon\":{\"keyword\":1,\"value\":{\"name\":\"\",\"assetGuid\":\"\"}},\"text\":{\"keyword\":1,\"value\":\"\"},\"tooltip\":{\"keyword\":1,\"value\":\"\"},\"description\":{\"keyword\":1,\"value\":\"\"},\"items\":[{\"name\":\"\",\"isDefault\":false,\"isSeparator\":false,\"description\":\"\",\"fileType\":1,\"openMethod\":2,\"path\":\"Assets/Scripts\",\"guid\":\"\",\"recurve\":false,\"hideExtension\":false,\"includePattern\":\"\",\"excludePattern\":\"\"},{\"name\":\"\",\"isDefault\":false,\"isSeparator\":true,\"description\":\"\",\"fileType\":0,\"openMethod\":0,\"path\":\"\",\"guid\":\"\",\"recurve\":false,\"hideExtension\":false,\"includePattern\":\"\",\"excludePattern\":\"\"},{\"name\":\"\",\"isDefault\":false,\"isSeparator\":false,\"description\":\"\",\"fileType\":2,\"openMethod\":0,\"path\":\"Assets/Example/Scenes\",\"guid\":\"\",\"recurve\":false,\"hideExtension\":true,\"includePattern\":\".unity$\",\"excludePattern\":\"\"},{\"name\":\"\",\"isDefault\":false,\"isSeparator\":true,\"description\":\"\",\"fileType\":0,\"openMethod\":0,\"path\":\"\",\"guid\":\"\",\"recurve\":false,\"hideExtension\":false,\"includePattern\":\"\",\"excludePattern\":\"\"},{\"name\":\"\",\"isDefault\":false,\"isSeparator\":false,\"description\":\"\",\"fileType\":2,\"openMethod\":0,\"path\":\"Assets/Atlas\",\"guid\":\"\",\"recurve\":true,\"hideExtension\":true,\"includePattern\":\".spriteatlas$\",\"excludePattern\":\"\"}]}",
+                    "enabled": {
+                        "keyword": 0,
+                        "value": true
+                    },
+                    "name": {
+                        "keyword": 0,
+                        "value": ""
+                    },
+                    "icon": {
+                        "keyword": 1,
+                        "value": {
+                            "name": "",
+                            "assetGuid": ""
+                        }
+                    },
+                    "text": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "tooltip": {
+                        "keyword": 1,
+                        "value": ""
+                    },
+                    "manualCreated": false,
+                    "description": {
+                        "keyword": 1,
+                        "value": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

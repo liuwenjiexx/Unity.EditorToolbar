@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427d09ec4465c0a46b82df249d72dceb, type: 3}
+  m_Name: NodeGraph
+  m_EditorClassIdentifier: 
+  serializedNodes: []
+  nodes:
+  - rid: 5946971729941233664
+  - rid: 5946971729941233665
+  - rid: 5946971729941233666
+  edges:
+  - GUID: 888147fa-0e9f-44e3-9b32-bb6a4b951f86
+    owner: {fileID: 11400000}
+    inputNodeGUID: 515474bb-b1c8-44df-91ac-bde45f2b7164
+    outputNodeGUID: c18a11a7-444e-46de-a420-350bb38266c8
+    inputFieldName: msg
+    outputFieldName: value
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 1115777d-abfc-43d7-a2a7-7e365c55e775
+    owner: {fileID: 11400000}
+    inputNodeGUID: 515474bb-b1c8-44df-91ac-bde45f2b7164
+    outputNodeGUID: 4da4db1b-efed-46cb-b221-04f269f00a63
+    inputFieldName: flowIn
+    outputFieldName: flowOut
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  groups: []
+  stackNodes: []
+  pinnedElements: []
+  exposedParameters: []
+  serializedParameterList: []
+  stickyNotes: []
+  nodeInspectorReference: {fileID: 0}
+  position: {x: 0, y: 0, z: 0}
+  scale: {x: 1, y: 1, z: 1}
+  flags: 0
+  tags: []
+  order: 0
+  lastRunGuid: 
+  customName: graph
+  description: ggggggs
+  references:
+    version: 2
+    RefIds:
+    - rid: 5946971729941233664
+      type: {class: StartNode, ns: Yanmonet.NodeGraph, asm: Yanmonet.NodeGraph}
+      data:
+        nodeCustomName: 
+        GUID: 4da4db1b-efed-46cb-b221-04f269f00a63
+        computeOrder: 0
+        position:
+          serializedVersion: 2
+          x: 150
+          y: 150
+          width: 100
+          height: 100
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+    - rid: 5946971729941233665
+      type: {class: LogNode, ns: Yanmonet.NodeGraph, asm: Yanmonet.NodeGraph}
+      data:
+        nodeCustomName: 
+        GUID: 515474bb-b1c8-44df-91ac-bde45f2b7164
+        computeOrder: 2
+        position:
+          serializedVersion: 2
+          x: 297
+          y: 150.4
+          width: 118.399994
+          height: 114.40001
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        enableFlow: 1
+        visibleFields: []
+        text: 
+    - rid: 5946971729941233666
+      type: {class: StringNode, ns: Yanmonet.NodeGraph, asm: Yanmonet.NodeGraph}
+      data:
+        nodeCustomName: 
+        GUID: c18a11a7-444e-46de-a420-350bb38266c8
+        computeOrder: 1
+        position:
+          serializedVersion: 2
+          x: 76.799995
+          y: 264.8
+          width: 148
+          height: 39.19998
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        value: Hello World

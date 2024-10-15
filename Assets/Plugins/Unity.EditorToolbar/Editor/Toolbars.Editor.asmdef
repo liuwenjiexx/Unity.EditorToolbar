@@ -1,0 +1,27 @@
+{
+    "name": "Yanmonet.Toolbars.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:49b7ae4994c515a47a1f1e63f63716c3",
+        "GUID:ca937d03ee5dd4d699091438dc0f3ae6",
+        "GUID:ccc90c7f74c90d24885debac82b0c123",
+        "GUID:9b880938a07b3c343be0dfd6021432a3"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.yanmonet.nodegraph",
+            "expression": "",
+            "define": "NODE_GRAPH"
+        }
+    ],
+    "noEngineReferences": false
+}

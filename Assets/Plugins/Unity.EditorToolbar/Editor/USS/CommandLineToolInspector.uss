@@ -1,0 +1,43 @@
+VisualElement {
+}
+
+ListView {
+    flex-grow: 1;
+}
+
+#addMenu .unity-toolbar-menu__text {
+    font-size: 20px;
+    margin-top: -2px;
+    padding-top: 0;
+}
+
+.list-container {
+    flex-grow: 1;
+}
+
+.list-container .unity-scroller--horizontal {
+    display: none;
+}
+
+.list-item {
+    width: 99.5%;
+}
+
+.item-cmd {
+    padding-top: 10px;
+}
+
+.item-cmd .unity-base-field__label {
+    padding-left: 3px;
+}
+
+.item-separator {
+    background-color: rgba(255, 255, 255, 0.29);
+    height: 2px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.item-desc {
+    height: 32px;
+}

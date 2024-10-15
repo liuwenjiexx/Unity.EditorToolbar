@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="/Assets/Plugins/Unity.EditorToolbar/Editor/USS/EditorToolbar.uss" />
+    <ui:VisualElement style="flex-direction: row; justify-content: flex-start;">
+        <ui:Button text="Button" display-tooltip-when-elided="true" />
+        <ui:Button text="Button" display-tooltip-when-elided="true" class="toolbar-button-active" />
+        <ui:Button text="Button121212121" display-tooltip-when-elided="true" />
+    </ui:VisualElement>
+    <ui:VisualElement style="height: 100px; justify-content: center;">
+        <ui:Label text="Label" display-tooltip-when-elided="true" />
+    </ui:VisualElement>
+</ui:UXML>

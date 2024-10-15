@@ -1,0 +1,14 @@
+.tool-desc {
+    height: 32px;
+}
+
+.tool-name {
+    display: none;
+}
+
+.user-settings-header {
+    -unity-font-style: bold;
+    margin-top: 5px;
+    margin-left: 2px;
+    margin-bottom: 2px;
+}

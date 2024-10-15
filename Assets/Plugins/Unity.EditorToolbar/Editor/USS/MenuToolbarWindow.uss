@@ -1,0 +1,14 @@
+.menu-item {
+    flex-direction: row;
+    align-items: center;
+}
+
+.menu-item-check {
+    margin-top: 5px;
+}
+
+#groupField {
+    min-width: 120px;
+    -unity-text-align: middle-left;
+    padding-left: 5px;
+}

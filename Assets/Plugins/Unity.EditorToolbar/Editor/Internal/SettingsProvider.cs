@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace UnityEditor.Toolbars.Internal
+namespace Unity.Toolbars.Editor
 {
 
     /// <summary>
@@ -221,7 +221,7 @@ namespace UnityEditor.Toolbars.Internal
 
         public void Load()
         {
-
+            object oldSettings = this.settings;
             try
             {
 #if UNITY_EDITOR
@@ -256,7 +256,7 @@ namespace UnityEditor.Toolbars.Internal
                         {
                             json = File.ReadAllText(filePath, Encoding);
                             lastWriteTime = File.GetLastWriteTimeUtc(filePath);
-                            EnableFileSystemWatcher(); 
+                            EnableFileSystemWatcher();
                         }
                         if (!string.IsNullOrEmpty(json))
                         {
@@ -283,7 +283,7 @@ namespace UnityEditor.Toolbars.Internal
                     {
                         this.settings = OnFirstCreateInstance();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Debug.LogException(ex);
                     }
@@ -294,12 +294,12 @@ namespace UnityEditor.Toolbars.Internal
                 if (this.settings == null)
                 {
                     this.settings = Activator.CreateInstance(type);
-                    
+
                 }
             }
 
-
-            OnLoadAfter?.Invoke(this.settings);
+            if (oldSettings != this.settings)
+                OnLoadAfter?.Invoke(this.settings);
         }
 
         public void Save()
@@ -318,6 +318,7 @@ namespace UnityEditor.Toolbars.Internal
                 return;
             }
 #endif
+            DisableFileSystemWatcher();
 
             string filePath = GetFilePath();
             string json = JsonUtility.ToJson(Settings, true);
@@ -335,7 +336,7 @@ namespace UnityEditor.Toolbars.Internal
 
         public void EnableFileSystemWatcher()
         {
-    
+
             if (!Application.isEditor)
                 return;
             if (fsw != null)
@@ -363,6 +364,15 @@ namespace UnityEditor.Toolbars.Internal
             catch (Exception ex)
             {
                 Debug.LogException(ex);
+            }
+        }
+
+        void DisableFileSystemWatcher()
+        {
+            if (fsw != null)
+            {
+                fsw.Dispose();
+                fsw = null;
             }
         }
 
