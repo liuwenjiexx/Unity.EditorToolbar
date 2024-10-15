@@ -15,9 +15,9 @@
 ## manifest.json
 
 ```
-"unity.extensions": "https://github.com/liuwenjiexx/Unity.Extensions.git",
-"unity.guiextensions": "https://github.com/liuwenjiexx/Unity.GuiExtensions.git",
-"unity.editortoolbar": "https://github.com/liuwenjiexx/Unity.EditorToolbar.git?path=/Assets/Plugins/Unity.EditorToolbar",
+"com.unity.serialization": "https://github.com/liuwenjiexx/unity.serialization.git",
+"com.unity.eui": "https://github.com/liuwenjiexx/unity.eui.git",
+"com.unity.editor.toolbar": "https://github.com/liuwenjiexx/Unity.EditorToolbar.git?path=/Assets/Plugins/Unity.EditorToolbar",
 ```
 
 

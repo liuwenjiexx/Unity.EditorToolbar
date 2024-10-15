@@ -18,7 +18,7 @@
     "com.unity.xr.legacyinputhelpers": "2.1.10",
     "com.unity.async": "file:../../Async/Assets/Plugins/Async",
     "com.unity.binding": "file:/github/unity.bindings/assets/plugins/unity.bindings",
-    "com.unity.editor.ui": "file:../../EditorUI/Assets/EditorUI",
+    "com.unity.eui": "file:../../EditorUI/Assets/EditorUI",
     "com.unity.serialization": "file:../../Serialization/Assets/Serialization",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",

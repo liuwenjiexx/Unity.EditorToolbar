@@ -11,7 +11,7 @@
   "dependencies": {
     "com.unity.binding": "0.0.2",
     "com.unity.serialization": "0.0.1",
-    "com.unity.editor.ui": "0.0.2"
+    "com.unity.eui": "0.0.2"
   },
   "author": {
     "name": ""
