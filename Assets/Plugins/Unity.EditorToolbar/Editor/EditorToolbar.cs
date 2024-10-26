@@ -9,10 +9,10 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using UnityEditor;
 using System.ComponentModel;
-using Unity.UI.Editor;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Unity.Bindings;
+using Unity.UIElements.Extensions.Editor;
 
 namespace Unity.Toolbars.Editor
 {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Unity.UI.Editor;
 using Unity.Bindings;
 
 namespace Unity.Toolbars.Editor
