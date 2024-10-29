@@ -12,7 +12,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Unity.Bindings;
-using Unity.UIElements.Extensions.Editor;
+using UnityEditor.UIElements.Extension;
 
 namespace Unity.Toolbars.Editor
 {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.ComponentModel;
 using UnityEditor;
 using UnityEngine.UIElements;
-using Unity.UIElements.Extensions.Editor;
+using UnityEditor.UIElements.Extension;
 
 namespace Unity.Toolbars.Editor
 {

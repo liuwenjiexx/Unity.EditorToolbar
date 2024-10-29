@@ -19,7 +19,7 @@
     "com.unity.async": "file:../../Async/Assets/Plugins/Async",
     "com.unity.binding": "file:/github/unity.bindings/assets/plugins/unity.bindings",
     "com.unity.ui-elements-extension": "file:../../UIElements.Extensions/Packages/UIElements.Extensions",
-    "com.unity.serialization": "file:../../Serialization/Assets/Serialization",
+    "com.unity.data.serialization": "file:../../Serialization/Assets/Serialization",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",

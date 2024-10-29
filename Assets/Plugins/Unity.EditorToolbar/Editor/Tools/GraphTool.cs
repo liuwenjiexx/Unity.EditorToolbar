@@ -7,7 +7,7 @@ using UnityEngine;
 using Yanmonet.NodeGraph;
 using UnityEditor;
 using Yanmonet.NodeGraph.Editor;
-using YMFramework;
+using Unity.Async;
 
 namespace Yanmonet.Toolbars.Editor
 {

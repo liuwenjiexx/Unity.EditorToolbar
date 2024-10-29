@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEditor;
+using UnityEditor.UIElements.Extension;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Unity.UIElements.Extensions.Editor;
 
 namespace Unity.Toolbars.Editor
 {

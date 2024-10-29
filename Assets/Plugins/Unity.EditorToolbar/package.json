@@ -10,8 +10,8 @@
   "description": "Editor Toolbar",
   "dependencies": {
     "com.unity.binding": "0.0.2",
-    "com.unity.serialization": "0.0.1",
-    "com.unity.eui": "0.0.2"
+    "com.unity.data.serialization": "0.0.1",
+    "com.unity.ui-elements-extension": "0.0.1"
   },
   "author": {
     "name": ""

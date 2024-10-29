@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Unity.Bindings;
 using Unity.Editor;
-using Unity.UIElements.Extensions.Editor;
+using UnityEditor.UIElements.Extension;
 
 namespace Unity.Toolbars.Editor
 {
