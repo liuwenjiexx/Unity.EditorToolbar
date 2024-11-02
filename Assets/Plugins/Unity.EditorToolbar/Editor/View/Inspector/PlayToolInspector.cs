@@ -7,7 +7,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
 
     [CustomInspector(typeof(PlayTool))]

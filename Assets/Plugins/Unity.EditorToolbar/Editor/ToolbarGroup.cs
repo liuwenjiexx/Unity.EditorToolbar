@@ -7,8 +7,9 @@ using System.ComponentModel;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements.Extension;
+using Unity;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     [Serializable]
     public class ToolbarGroup : INotifyPropertyChanged, ISerializationCallbackReceiver

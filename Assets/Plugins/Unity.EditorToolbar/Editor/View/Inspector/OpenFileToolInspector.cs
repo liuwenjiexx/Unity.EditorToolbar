@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Bindings;
+using Bindings;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     [CustomInspector(typeof(OpenFileTool))]
     public class OpenFileToolInspector : CustomInspector

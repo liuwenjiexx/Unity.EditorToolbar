@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor.UIElements;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     public class CustomInspectorAttribute : Attribute
     {

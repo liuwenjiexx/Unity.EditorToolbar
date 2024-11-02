@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
 
     /// <summary>

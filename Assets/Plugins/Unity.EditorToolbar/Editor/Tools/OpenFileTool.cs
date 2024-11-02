@@ -11,9 +11,10 @@ using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 using UnityEditor;
 using System.Collections;
+using Unity;
 
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     [Serializable]
     public class OpenFileTool : EditorToolbarButton

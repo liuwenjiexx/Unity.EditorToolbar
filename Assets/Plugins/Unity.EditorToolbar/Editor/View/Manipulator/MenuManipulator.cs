@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     class MenuManipulator : MouseManipulator
     {

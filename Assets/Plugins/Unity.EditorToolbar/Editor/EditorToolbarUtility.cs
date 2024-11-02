@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     public static partial class EditorToolbarUtility
     {

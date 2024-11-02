@@ -7,8 +7,9 @@ using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Linq;
+using Unity;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     [Serializable]
     public class MenuTool : EditorToolbarButton

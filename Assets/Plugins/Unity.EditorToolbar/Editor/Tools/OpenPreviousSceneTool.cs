@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
+using Unity;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     /// <summary>
     /// 打开上一次打开的场景

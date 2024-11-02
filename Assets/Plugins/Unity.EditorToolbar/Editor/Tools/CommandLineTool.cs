@@ -9,7 +9,7 @@ using Debug = UnityEngine.Debug;
 using UnityEditor;
 using System.Collections;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
 
     [Serializable]

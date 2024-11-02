@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEditor;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     /// <summary>
     /// 工具条设置

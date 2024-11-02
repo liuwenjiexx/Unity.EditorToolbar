@@ -6,7 +6,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
 
     internal static class Extensions

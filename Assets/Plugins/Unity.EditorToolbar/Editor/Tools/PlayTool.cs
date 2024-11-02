@@ -6,8 +6,9 @@ using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 using UnityEditor;
 using System.Linq;
+using Unity;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
 
     [Serializable]

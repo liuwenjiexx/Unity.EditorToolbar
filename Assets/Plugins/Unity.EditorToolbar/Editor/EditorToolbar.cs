@@ -11,10 +11,11 @@ using UnityEditor;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Unity.Bindings;
+using Bindings;
 using UnityEditor.UIElements.Extension;
+using Unity;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
 
     [Serializable]

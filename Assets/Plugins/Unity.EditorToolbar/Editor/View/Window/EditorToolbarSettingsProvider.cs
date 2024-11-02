@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     class EditorToolbarSettingsProvider : UnityEditor.SettingsProvider
     {
@@ -18,7 +19,7 @@ namespace Unity.Toolbars.Editor
         public static EditorToolbarSettingsProvider instance;
         internal static bool updateList;
 
-        const string MenuPath = "Unity/Toolbar";
+        const string MenuPath = "Tool/Toolbar";
 
         public EditorToolbarSettingsProvider()
           : base(MenuPath, SettingsScope.Project)

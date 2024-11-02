@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Unity;
 using UnityEditor;
 using UnityEditor.UIElements.Extension;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
 
     [Serializable]

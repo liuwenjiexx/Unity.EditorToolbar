@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
 
     class DragAndDropManipulator : MouseManipulator

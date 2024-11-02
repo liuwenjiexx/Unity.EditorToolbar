@@ -7,11 +7,11 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Unity.Bindings;
+using Bindings;
 using Unity.Editor;
 using UnityEditor.UIElements.Extension;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     [CustomEditor(typeof(ToolbarInspectorObject))]
     public class ToolbarInspector : UnityEditor.Editor

@@ -3,12 +3,13 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor;
-using Unity.Bindings;
+using Bindings;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
+using Unity;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     public abstract class EditorToolbarButton : EditorToolbar
     {
@@ -16,7 +17,7 @@ namespace Unity.Toolbars.Editor
 
         public Item DefaultItem
         {
-            get => GetItems().FirstOrDefault(o => o.IsDefault);
+            get => GetItems().FirstOrDefault(o => o.IsDefault); 
         }
 
         protected virtual ToolbarStyle Style

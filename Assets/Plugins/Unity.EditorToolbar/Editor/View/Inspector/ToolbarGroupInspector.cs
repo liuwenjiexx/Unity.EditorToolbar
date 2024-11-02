@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Unity.Bindings;
+using Bindings;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     [CustomInspector(typeof(ToolbarGroup))]
     public class ToolbarGroupInspector : CustomInspector

@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEditor;
+using Unity;
+using Unity.Serialization;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     /// <summary>
     /// 工具条用户设置

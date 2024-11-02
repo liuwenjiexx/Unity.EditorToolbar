@@ -10,7 +10,7 @@ using System.Linq;
 using UnityEditor.UIElements;
 using System.IO;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
     public class MenuToolbarWindow : EditorWindow
     {

@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
-namespace Unity.Toolbars.Editor
+namespace EditorToolbars
 {
 
     public class CreateFromAttribute : Attribute
