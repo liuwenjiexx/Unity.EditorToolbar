@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEditor;
-using Unity.Toolbars.Editor;
+using EditorToolbars;
 using UnityEngine;
 
 
@@ -78,7 +78,7 @@ public static class ToolbarTest
         };
         tool.Group.Position = ToolbarPosition.RightToolbar;
         //AddGroup 为菜单分割线
-        tool.AddAssetFolder("Assets/Scripts",openMethod: Unity.Toolbars.Editor.OpenFileTool.OpenMethod.Ping)
+        tool.AddAssetFolder("Assets/Scripts",openMethod: EditorToolbars.OpenFileTool.OpenMethod.Ping)
             .AddSeparator()
             .AddAssetFileFromFolder("Assets/Example/Scenes", include: ".unity$", recurve: false)
             .AddSeparator()

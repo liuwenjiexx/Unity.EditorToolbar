@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Unity.Toolbars.Editor;
+using EditorToolbars;
 using System.Linq;
 
 public class MyTool : EditorToolbarButton
 {
     public MyTool()
     {
-        Text = "MyTool";
+        Text = "MyTool"; 
     }
 
     protected override void OnClick()
